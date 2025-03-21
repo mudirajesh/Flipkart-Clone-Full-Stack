@@ -16,15 +16,15 @@ const SummaryApi = {
     method: "put",
   },
   forgot_password_otp_verification: {
-    url: "api/user/verify-forgot-password-otp",
+    url: "/api/user/verify-forgot-password-otp",
     method: "put",
   },
   resetPassword: {
-    url: "api/user/reset-password",
+    url: "/api/user/reset-password",
     method: "put",
   },
   refreshToken: {
-    url: "api/user/refresh-token",
+    url: "/api/user/refresh-token",
     method: "post",
   },
   userDetails: {
@@ -40,8 +40,28 @@ const SummaryApi = {
     method: "put",
   },
   updateUserDetails: {
-    post: "/api/user/update-user",
+    url: "/api/user/update-user",
     method: "put",
+  },
+  addCategory: {
+    url: "/api/category/add-category",
+    method: "post",
+  },
+  uploadImage: {
+    url: "/api/file/upload",
+    method: "post",
+  },
+  getCategory: {
+    url: "/api/category/get",
+    method: "get",
+  },
+  updateCategory: {
+    url: "/api/category/update",
+    method: "put",
+  },
+  deleteCategory: {
+    url: "/api/category/delete",
+    method: "delete",
   },
 }
 
