@@ -4,6 +4,7 @@ const categorySchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      default: "",
     },
     image: {
       type: String,
@@ -15,5 +16,5 @@ const categorySchema = new mongoose.Schema(
   }
 )
 
-const CategoryModel = mongooose.model("category", categorySchema)
+const CategoryModel = mongoose.model("category", categorySchema)
 export default CategoryModel

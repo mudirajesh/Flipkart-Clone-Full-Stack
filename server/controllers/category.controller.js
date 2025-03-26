@@ -22,7 +22,7 @@ export const AddCategoryController = async (request, response) => {
     const saveCategory = await addCategory.save()
 
     if (!saveCategory) {
-      return response.status(400).json({
+      return response.status(500).json({
         message: "Not Created",
         error: true,
         success: false,
@@ -37,7 +37,7 @@ export const AddCategoryController = async (request, response) => {
     })
   } catch (error) {
     return response.status(500).json({
-      message: "error.message" || error,
+      message: error.message || error,
       error: true,
       success: false,
     })
@@ -46,9 +46,7 @@ export const AddCategoryController = async (request, response) => {
 
 export const getCategoryController = async (request, response) => {
   try {
-    const data = await CategoryModel.find().sort({
-      createdAt: -1,
-    })
+    const data = await CategoryModel.find().sort({ createdAt: -1 })
 
     return response.json({
       data: data,
@@ -57,9 +55,9 @@ export const getCategoryController = async (request, response) => {
     })
   } catch (error) {
     return response.status(500).json({
-      message: "error.message" || error,
-      success: false,
+      message: error.message || error,
       error: true,
+      success: false,
     })
   }
 }

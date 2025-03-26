@@ -8,6 +8,7 @@ import EditCategory from "../components/EditCategory"
 import ConfirmBox from "../components/ConfirmBox"
 import toast from "react-hot-toast"
 import AxiosToastError from "../utils/AxiosToastError"
+import { useSelector } from "react-redux"
 
 const CategoryPage = () => {
   const [openUploadCategory, setOpenUploadCategory] = useState(false)
@@ -22,6 +23,16 @@ const CategoryPage = () => {
   const [deleteCategory, setDeleteCategory] = useState({
     _id: "",
   })
+
+  // Comment: state -> product (store.js) -> allCategory (productSlice.js -> initialValue)
+
+  // const allCategory = useSelector((state) => state.product.allCategory)
+
+  // console.log("all Category  redux", allCategory)
+
+  // useEffect(() => {
+  //   setCategoryData()
+  // }, [allCategory])
 
   const fetchCategory = async () => {
     try {
@@ -91,6 +102,7 @@ const CategoryPage = () => {
             <div
               className="w-32 h-56 group rounded shadow-md 
             "
+              key={category._id}
             >
               <img
                 src={category.image}

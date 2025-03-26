@@ -87,7 +87,7 @@ const Profile = () => {
       </button>
 
       {openProfileAvatarEdit && (
-        <UserProfileAvatarEdit close={() => setProfileAvatarEdit} />
+        <UserProfileAvatarEdit close={() => setProfileAvatarEdit(false)} />
       )}
 
       {/**name, mobile, email change password*/}

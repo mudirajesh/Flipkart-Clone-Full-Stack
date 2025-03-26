@@ -23,7 +23,7 @@ const productSchema = new mongoose.Schema(
     ],
     unit: {
       type: String,
-      default: null,
+      default: "",
     },
     stock: {
       type: Number,
@@ -37,7 +37,7 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: null,
     },
-    despriction: {
+    description: {
       type: String,
       default: "",
     },
@@ -52,6 +52,18 @@ const productSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+  }
+)
+
+//create a text index
+productSchema.index(
+  {
+    name: "text",
+    description: "text",
+  },
+  {
+    name: 10,
+    description: 5,
   }
 )
 

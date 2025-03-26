@@ -1,5 +1,5 @@
 import React from "react"
-import { IoClose } from "react-icons-io5"
+import { IoClose } from "react-icons/io5"
 
 const ConfirmBox = ({ cancel, confirm, close }) => {
   return (
@@ -22,7 +22,7 @@ const ConfirmBox = ({ cancel, confirm, close }) => {
           </button>
           <button
             onClick={confirm}
-            className="px-4 py-1 border rounded border-green-600 text-green-600 hover:bg-red-600 hover:text-white
+            className="px-4 py-1 border rounded border-green-600 text-green-600 hover:bg-green-600 hover:text-white
             "
           >
             Confirm
