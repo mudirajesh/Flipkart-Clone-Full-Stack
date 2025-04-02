@@ -5,11 +5,18 @@ import Footer from "./components/Footer"
 import toast, { Toaster } from "react-hot-toast"
 import fetchUserDetails from "./utils/fetchUserDetails"
 import { setUserDetails } from "./store/userSlice"
-import { setAllCategory, setAllSubCategory } from "./store/productSlice"
+import {
+  setAllCategory,
+  setAllSubCategory,
+  setLoadingCategory,
+} from "./store/productSlice"
 import { useDispatch } from "react-redux"
 import Axios from "./utils/Axios"
 import SummaryApi from "./common/SummaryApi"
+import { handleAddItemCart } from "./store/cartProduct"
 import { useEffect } from "react"
+import GlobalProvider from "./provider/GlobalProvider"
+import { FaCartShopping } from "react-icons/fa6"
 
 function App() {
   //koi bhi reducer ko call krna ke liye
@@ -22,6 +29,7 @@ function App() {
 
   const fetchCategory = async () => {
     try {
+      dispatch(setLoadingCategory(true))
       const response = await Axios({
         ...SummaryApi.getCategory,
       })
@@ -29,12 +37,16 @@ function App() {
       const { data: responseData } = response
 
       if (responseData.success) {
-        console.log("responseData.data", responseData.data)
-        dispatch(setAllCategory(responseData.data))
+        dispatch(
+          setAllCategory(
+            responseData.data.sort((a, b) => a.name.localeCompare(b.name))
+          )
+        )
         // setCategoryData(responseData.data)
       }
     } catch (error) {
     } finally {
+      dispatch(setLoadingCategory(false))
     }
   }
 
@@ -63,14 +75,14 @@ function App() {
   }, [])
 
   return (
-    <>
+    <GlobalProvider>
       <Header />
       <main className="min-h-[78vh]">
         <Outlet />
       </main>
       <Footer />
       <Toaster />
-    </>
+    </GlobalProvider>
   )
 }
 

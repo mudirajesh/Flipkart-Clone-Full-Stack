@@ -8,6 +8,9 @@ import { IoMdCart } from "react-icons/io"
 import { useSelector } from "react-redux"
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go"
 import UserMenu from "./UserMenu"
+import { DisplayPriceInRupees } from "../utils/DisplayPriceInRupees"
+import { useGlobalContext } from "../provider/GlobalProvider"
+import DisplayCartItem from "./DisplayCartItem"
 
 const Header = () => {
   const [isMobile] = useMobile()
@@ -18,6 +21,11 @@ const Header = () => {
   const navigate = useNavigate()
   const user = useSelector((state) => state?.user)
   const [openUserMenu, setOpenUserMenu] = useState(false)
+  const cartItem = useSelector((state) => state.cartItem.cart)
+  // const [totalPrice,setTotalPrice] = useState(0)
+  // const [totalQty,setTotalQty] = useState(0)
+  const { totalPrice, totalQty } = useGlobalContext()
+  const [openCartSection, setOpenCartSection] = useState(false)
 
   const redirectToLoginPage = () => {
     navigate("/login")
@@ -35,8 +43,22 @@ const Header = () => {
     navigate("/user")
   }
 
+  //total item and total price
+  // useEffect(()=>{
+  //     const qty = cartItem.reduce((preve,curr)=>{
+  //         return preve + curr.quantity
+  //     },0)
+  //     setTotalQty(qty)
+
+  //     const tPrice = cartItem.reduce((preve,curr)=>{
+  //         return preve + (curr.productId.price * curr.quantity)
+  //     },0)
+  //     setTotalPrice(tPrice)
+
+  // },[cartItem])
+
   return (
-    <header className="h-24  lg:h-20 lg:shadow-md sticky top-0 z-40 flex flex-col justify-center items-center bg-whited">
+    <header className="h-24  lg:h-20 lg:shadow-md sticky top-0 z-40 flex flex-col justify-center items-center bg-white">
       {!(isSearchPage && isMobile) && (
         <div className="container mx-auto flex items-center justify-between  px-2 ">
           {/**logo */}
@@ -47,7 +69,7 @@ const Header = () => {
                 width={170}
                 height={60}
                 alt="logo"
-                className="hidden lg:block"
+                className="hidden lg:block ml-4"
               />
               <img
                 src={logo}
@@ -101,19 +123,34 @@ const Header = () => {
                   )}
                 </div>
               ) : (
-                <button onClick={redirectToLoginPage} className="text-lg px-2">
-                  Login
-                </button>
+                <div className="flex cursor-pointer hover:bg-[#2a55e5] hover:text-white px-2 py-1 rounded">
+                  <FaRegUserCircle size={26}></FaRegUserCircle>
+                  <div onClick={redirectToLoginPage} className="text-lg px-2 ">
+                    Login
+                  </div>
+                </div>
               )}
 
-              <button className="flex items-center gap-2 bg-green-800 hover:bg-green-700 px-2 py-1 rounded text-white">
+              <button
+                onClick={() => setOpenCartSection(true)}
+                className="flex items-center gap-2 bg-green-800 hover:bg-green-700 px-2 py-1 rounded text-white mr-4"
+              >
                 {/** add to cart icons */}
                 <div className="animate-bounce">
                   <IoMdCart size={26} />
                 </div>
 
                 {/** */}
-                <div className="font-semibold">My Cart</div>
+                <div className="font-semibold">
+                  {cartItem[0] ? (
+                    <div>
+                      <p>{totalQty} Items</p>
+                      <p>{DisplayPriceInRupees(totalPrice)}</p>
+                    </div>
+                  ) : (
+                    <p>My Cart</p>
+                  )}
+                </div>
               </button>
             </div>
           </div>
@@ -123,6 +160,10 @@ const Header = () => {
       <div className="container mx-auto px-2 lg:hidden">
         <Search />
       </div>
+
+      {openCartSection && (
+        <DisplayCartItem close={() => setOpenCartSection(false)} />
+      )}
     </header>
   )
 }

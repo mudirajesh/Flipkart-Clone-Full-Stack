@@ -14,6 +14,8 @@ const Search = () => {
 
   //useMobile hooks
   const [isMobile] = useMobile()
+  const params = useLocation()
+  const searchText = params.search.slice(3)
 
   useEffect(() => {
     const isSearch = location.pathname === "/search"
@@ -24,8 +26,14 @@ const Search = () => {
     navigate("/search")
   }
 
+  const handleOnChange = (e) => {
+    const value = e.target.value
+    const url = `/search?q=${value}`
+    navigate(url)
+  }
+
   return (
-    <div className=" w-full min-w-[300px] lg:min-w-[420px] h-11 lg:h-12 rounded-lg border overflow-hidden flex items-center text-neutral-500 bg-slate-50 group focus-within:border-[#ffbf00]">
+    <div className=" w-full min-w-[300px] lg:min-w-[600px] h-11 lg:h-12 rounded-lg border overflow-hidden flex items-center text-neutral-500 bg-slate-50 group focus-within:border-[#ffbf00]">
       <div>
         {isMobile && isSearchPage ? (
           <Link
@@ -55,9 +63,9 @@ const Search = () => {
                 1000, // Waits 1s
                 'Search "bread"', // Deletes 'One' and types 'Two'
                 1000, // Waits 2s
-                'Search "panner"', // Types 'Three' without deleting 'Two'
+                'Search "laptop"', // Types 'Three' without deleting 'Two'
                 1000,
-                'Search "sugar"',
+                'Search "mobile"',
               ]}
               wrapper="span"
               speed={50}
@@ -72,7 +80,9 @@ const Search = () => {
               type=" text"
               placeholder=" Search for atta dal and more."
               autoFocus={true}
+              defaultValue={searchText}
               className="bg-transparent  w-full h-full outline-none"
+              onChange={handleOnChange}
             />
           </div>
         )}
