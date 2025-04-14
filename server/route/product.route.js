@@ -7,6 +7,7 @@ import {
   getProductByCategoryAndSubCategory,
   getProductController,
   getProductDetails,
+  searchProduct,
   updateProductDetails,
 } from "../controllers/product.controller.js"
 import { admin } from "../middleware/Admin.js"

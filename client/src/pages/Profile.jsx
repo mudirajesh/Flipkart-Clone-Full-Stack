@@ -31,6 +31,17 @@ const Profile = () => {
     })
   }, [user])
 
+  const handleOnChange = (e) => {
+    const { name, value } = e.target
+
+    setUserData((preve) => {
+      return {
+        ...preve,
+        [name]: value,
+      }
+    })
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -55,17 +66,6 @@ const Profile = () => {
     }
   }
 
-  const handleOnChange = (e) => {
-    const { name, value } = e.target
-
-    setUserData((preve) => {
-      return {
-        ...preve,
-        [name]: value,
-      }
-    })
-  }
-
   return (
     <div className="p-4 ">
       {/**profile uplaod and display image */}
@@ -81,7 +81,7 @@ const Profile = () => {
         onClick={() => {
           setProfileAvatarEdit(true)
         }}
-        className="text-sm w-20 border border-[#ffc929] hover:border-[#ffbf00] hover:bg-[#ffbf00] px-3 py-1 rounded-full mt-3"
+        className="text-sm min-w-20 border border-[#ffc929] hover:border-[#ffbf00] hover:bg-[#ffbf00] px-3 py-1 rounded-full mt-3"
       >
         Edit
       </button>
@@ -107,7 +107,7 @@ const Profile = () => {
         </div>
 
         <div className="grid">
-          <label htmlFor="email">Name</label>
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
@@ -136,7 +136,7 @@ const Profile = () => {
           />
         </div>
 
-        <button className="border px-4 py-2 font-semibold hover:bg-[#ffc929] border-[#ffc929] text-[#ffc929] hover:text-neutral-800 rounded">
+        <button className="border px-4 py-2 font-semibold hover:bg-[#ffc929] border-[#ffc929] text-[#ffbf00] hover:text-neutral-800 rounded">
           {loading ? "Loading..." : "Submit"}
         </button>
       </form>

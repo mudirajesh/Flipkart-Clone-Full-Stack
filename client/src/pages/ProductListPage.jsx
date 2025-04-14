@@ -1,8 +1,10 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Axios from "../utils/Axios"
 import SummaryApi from "../common/SummaryApi"
 import { Link, useParams } from "react-router-dom"
 import AxiosToastError from "../utils/AxiosToastError"
+import Loading from "../components/Loading"
+import CardProduct from "../components/CardProduct"
 import { useSelector } from "react-redux"
 import { valideURLConvert } from "../utils/valideURLConvert"
 
@@ -79,24 +81,26 @@ const ProductListPage = () => {
             }/${valideURLConvert(s.name)}-${s._id}`
 
             return (
-              <Link
-                to={link}
-                className={`w-full p-2 lg:flex items-center lg:w-full lg:h-16 box-border lg:gap-4 border-b 
+              <>
+                <Link
+                  to={link}
+                  className={`w-full p-2 lg:flex items-center lg:w-full lg:h-16 box-border lg:gap-4 border-b 
                   hover:bg-green-100 cursor-pointer
                   ${subCategoryId === s._id ? "bg-green-100" : ""}
                 `}
-              >
-                <div className="w-fit max-w-28 mx-auto lg:mx-0 bg-white rounded  box-border">
-                  <img
-                    src={s.image}
-                    alt="subCategory"
-                    className=" w-14 lg:h-14 lg:w-12 h-full object-scale-down"
-                  />
-                </div>
-                <p className="-mt-6 lg:mt-0 text-xs text-center lg:text-left lg:text-base">
-                  {s.name}
-                </p>
-              </Link>
+                >
+                  <div className="w-fit max-w-28 mx-auto lg:mx-0 bg-white rounded  box-border">
+                    <img
+                      src={s.image}
+                      alt="subCategory"
+                      className=" w-14 lg:h-14 lg:w-12 h-full object-scale-down"
+                    />
+                  </div>
+                  <p className="-mt-6 lg:mt-0 text-xs text-center lg:text-left lg:text-base">
+                    {s.name}
+                  </p>
+                </Link>
+              </>
             )
           })}
         </div>

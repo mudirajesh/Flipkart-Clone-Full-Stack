@@ -9,13 +9,11 @@ const orderSchema = new mongoose.Schema(
     orderId: {
       type: String,
       required: [true, "Provide orderId"],
+      unique: true,
     },
     productId: {
       type: mongoose.Schema.ObjectId,
       ref: "product",
-    },
-    product_details: {
-      type: Object,
     },
     product_details: {
       name: String,

@@ -6,6 +6,7 @@ import SummaryApi from "../common/SummaryApi"
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6"
 import { useSelector } from "react-redux"
 import CardLoading from "./CardLoading"
+import CardProduct from "./CardProduct"
 import { valideURLConvert } from "../utils/valideURLConvert"
 
 const CategoryWiseProductDisplay = ({ id, name }) => {

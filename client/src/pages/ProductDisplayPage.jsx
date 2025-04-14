@@ -1,14 +1,16 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
 import SummaryApi from "../common/SummaryApi"
 import Axios from "../utils/Axios"
 import AxiosToastError from "../utils/AxiosToastError"
+import { FaAngleRight, FaAngleLeft } from "react-icons/fa6"
 import { DisplayPriceInRupees } from "../utils/DisplayPriceInRupees"
 import Divider from "../components/Divider"
 import image1 from "../assets/minute_delivery.png"
 import image2 from "../assets/Best_Prices_Offers.png"
 import image3 from "../assets/Wide_Assortment.png"
 import { pricewithDiscount } from "../utils/PriceWithDiscount"
+import AddToCartButton from "../components/AddToCartButton"
 
 const ProductDisplayPage = () => {
   const params = useParams()
@@ -124,10 +126,12 @@ const ProductDisplayPage = () => {
           {data?.more_details &&
             Object.keys(data?.more_details).map((element, index) => {
               return (
-                <div>
-                  <p className="font-semibold">{element}</p>
-                  <p className="text-base">{data?.more_details[element]}</p>
-                </div>
+                <>
+                  <div>
+                    <p className="font-semibold">{element}</p>
+                    <p className="text-base">{data?.more_details[element]}</p>
+                  </div>
+                </>
               )
             })}
         </div>
@@ -216,10 +220,12 @@ const ProductDisplayPage = () => {
           {data?.more_details &&
             Object.keys(data?.more_details).map((element, index) => {
               return (
-                <div>
-                  <p className="font-semibold">{element}</p>
-                  <p className="text-base">{data?.more_details[element]}</p>
-                </div>
+                <>
+                  <div>
+                    <p className="font-semibold">{element}</p>
+                    <p className="text-base">{data?.more_details[element]}</p>
+                  </div>
+                </>
               )
             })}
         </div>

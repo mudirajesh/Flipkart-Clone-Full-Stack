@@ -55,6 +55,7 @@ const ResetPassword = () => {
     //optional
     if (data.newPassword !== data.confirmPassword) {
       toast.error("New password and confirmPassword must be same.")
+      return
     }
 
     try {
@@ -71,9 +72,7 @@ const ResetPassword = () => {
       if (response.data.success) {
         toast.success(response.data.message)
 
-        navigate("/login", {
-          state: data,
-        })
+        navigate("/login")
         setData({
           email: "",
           newPassword: "",
@@ -99,7 +98,7 @@ const ResetPassword = () => {
                 type={showPassword ? "text" : "password"}
                 id="password"
                 className="w-full outline-none "
-                name="password"
+                name="newPassword"
                 value={data.newPassword}
                 onChange={handleChange}
                 placeholder="Enter your new password"

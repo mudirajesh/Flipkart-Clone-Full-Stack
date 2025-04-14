@@ -399,30 +399,32 @@ const EditProductAdmin = ({ close, data: propsData, fetchProductData }) => {
               {/**add more field**/}
               {Object?.keys(data?.more_details)?.map((k, index) => {
                 return (
-                  <div className="grid gap-1">
-                    <label htmlFor={k} className="font-medium">
-                      {k}
-                    </label>
-                    <input
-                      id={k}
-                      type="text"
-                      value={data?.more_details[k]}
-                      onChange={(e) => {
-                        const value = e.target.value
-                        setData((preve) => {
-                          return {
-                            ...preve,
-                            more_details: {
-                              ...preve.more_details,
-                              [k]: value,
-                            },
-                          }
-                        })
-                      }}
-                      required
-                      className="bg-blue-50 p-2 outline-none border focus-within:border-primary-200 rounded"
-                    />
-                  </div>
+                  <>
+                    <div className="grid gap-1">
+                      <label htmlFor={k} className="font-medium">
+                        {k}
+                      </label>
+                      <input
+                        id={k}
+                        type="text"
+                        value={data?.more_details[k]}
+                        onChange={(e) => {
+                          const value = e.target.value
+                          setData((preve) => {
+                            return {
+                              ...preve,
+                              more_details: {
+                                ...preve.more_details,
+                                [k]: value,
+                              },
+                            }
+                          })
+                        }}
+                        required
+                        className="bg-blue-50 p-2 outline-none border focus-within:border-primary-200 rounded"
+                      />
+                    </div>
+                  </>
                 )
               })}
 

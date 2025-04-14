@@ -13,7 +13,7 @@ const UserMenuMobile = () => {
       >
         <IoClose size={25} />
       </button>
-      <div className="container mx-auto p-3 pb-8">
+      <div className="container mx-auto px-3 pb-8">
         <UserMenu />
       </div>
     </section>

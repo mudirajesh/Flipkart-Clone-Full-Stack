@@ -147,5 +147,3 @@ export const deleteCartItemQtyController = async (request, response) => {
     })
   }
 }
-
-export default cart.controller

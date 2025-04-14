@@ -6,6 +6,7 @@ import ViewImage from "../components/ViewImage"
 import { MdDelete } from "react-icons/md"
 import { useSelector } from "react-redux"
 import { IoClose } from "react-icons/io5"
+import AddFieldComponent from "../components/AddFieldComponent"
 import AxiosToastError from "../utils/AxiosToastError"
 import SummaryApi from "../common/SummaryApi"
 import successAlert from "../utils/SuccessAlert"
@@ -72,6 +73,15 @@ const UploadProduct = () => {
 
   const handleDeleteImage = async (index) => {
     data.image.splice(index, 1)
+    setData((preve) => {
+      return {
+        ...preve,
+      }
+    })
+  }
+
+  const handleRemoveCategory = async (index) => {
+    data.category.splice(index, 1)
     setData((preve) => {
       return {
         ...preve,
@@ -158,8 +168,8 @@ const UploadProduct = () => {
               name="name"
               value={data.name}
               onChange={handleChange}
-              classname="bg-blue-50 p-2 outline-none border focus-within:border-[#ffbf00] rounded"
               required
+              classname="bg-blue-50 p-2 outline-none border focus-within:border-[#ffbf00] rounded"
             />
           </div>
           <div classaName="grid gap-1">
@@ -171,7 +181,7 @@ const UploadProduct = () => {
               id="description"
               type="text"
               placeholder="Enter product description"
-              name="name"
+              name="description"
               value={data.description}
               onChange={handleChange}
               required
@@ -231,6 +241,50 @@ const UploadProduct = () => {
                         className="absolute bottom-0 right-0 p-1 bg-red-600 hover:bg-red-600 rounded text-white hidden group-hover:block cursor-pointer"
                       >
                         <MdDelete />
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+          <div className="grid gap-1">
+            <label className="font-medium">Category</label>
+            <div>
+              <select
+                className="bg-blue-50 border w-full p-2 rounded"
+                value={selectCategory}
+                onChange={(e) => {
+                  const value = e.target.value
+                  const category = allCategory.find((el) => el._id === value)
+
+                  setData((preve) => {
+                    return {
+                      ...preve,
+                      category: [...preve.category, category],
+                    }
+                  })
+                  setSelectCategory("")
+                }}
+              >
+                <option value={""}>Select Category</option>
+                {allCategory.map((c, index) => {
+                  return <option value={c?._id}>{c.name}</option>
+                })}
+              </select>
+              <div className="flex flex-wrap gap-3">
+                {data.category.map((c, index) => {
+                  return (
+                    <div
+                      key={c._id + index + "productsection"}
+                      className="text-sm flex items-center gap-1 bg-blue-50 mt-2"
+                    >
+                      <p>{c.name}</p>
+                      <div
+                        className="hover:text-red-500 cursor-pointer"
+                        onClick={() => handleRemoveCategory(index)}
+                      >
+                        <IoClose size={20} />
                       </div>
                     </div>
                   )
@@ -311,7 +365,10 @@ const UploadProduct = () => {
             />
           </div>
           <div classaName="grid gap-1">
-            <label htmlFor="stock"> Number of Stock: </label>
+            <label htmlFor="stock" className="font-medium">
+              {" "}
+              Number of Stock:{" "}
+            </label>
             <input
               id="stock"
               type="number"
@@ -329,7 +386,7 @@ const UploadProduct = () => {
               Price:{" "}
             </label>
             <input
-              id="stock"
+              id="price"
               type="number"
               placeholder="Enter product price"
               name="price"
@@ -387,7 +444,7 @@ const UploadProduct = () => {
           })}
           <div
             onClick={() => setOpenAddField(true)}
-            className="inline-block hover:bg-[#ffc929] bg-white
+            className=" hover:bg-[#ffc929] bg-white
           py-1 px-3 w-32 text-center font-semibold border border-[#ffbf00]
           hover:text-neutral-900 cursor-pointer rounded"
           >
@@ -410,9 +467,7 @@ const UploadProduct = () => {
             setFieldName(e.target.value)
           }}
           submit={handleAddField}
-          close={() => {
-            setOpenAddField(false)
-          }}
+          close={() => setOpenAddField(false)}
         />
       )}
     </section>

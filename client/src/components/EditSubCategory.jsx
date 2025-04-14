@@ -12,7 +12,7 @@ const EditSubCategory = ({ close, data, fetchData }) => {
     _id: data.id,
     name: data.name,
     image: data.image,
-    category: data.category,
+    category: data.category || [],
   })
 
   const allCategory = useSelector((state) => state.product.allCategory)
@@ -31,7 +31,7 @@ const EditSubCategory = ({ close, data, fetchData }) => {
   }
 
   const handleUploadSubCategoryImage = async (e) => {
-    const file = e.target.file[0]
+    const file = e.target.files[0]
 
     if (!file) {
       return
@@ -54,7 +54,7 @@ const EditSubCategory = ({ close, data, fetchData }) => {
     )
 
     subCategoryData.category.splice(index, 1)
-    subCategoryData((preve) => {
+    setSubCategoryData((preve) => {
       return {
         ...preve,
       }
@@ -77,7 +77,9 @@ const EditSubCategory = ({ close, data, fetchData }) => {
           close()
         }
 
-        if (fetchData) [fetchData()]
+        if (fetchData) {
+          fetchData()
+        }
       }
     } catch (error) {
       AxiosToastError(error)
@@ -88,19 +90,20 @@ const EditSubCategory = ({ close, data, fetchData }) => {
       <div className="w-full max-5-xl bg-white p-4 rounded">
         <div className="flex items-center justify-between gap-3">
           <h1 className="font-semibold">Edit Sub Category </h1>
-          <button>
-            <IoClose onClick={close} size={25} />
+          <button onClick={close}>
+            <IoClose size={25} />
           </button>
         </div>
 
-        <form className="my-3 grid gap-3" onSumbit={handleSubmitSubCategory}>
+        <form className="my-3 grid gap-3" onSubmit={handleSubmitSubCategory}>
           <div className="grid gap-1">
-            <label htmlfor="name"> Name </label>
+            <label htmlFor="name">Name</label>
             <input
               id="name"
+              name="name"
               value={subCategoryData.name}
               onChange={handleChange}
-              className="p-3 bg-blue-50 outline-none focus-within:border-[#ffbf00] rounded"
+              className="p-3 bg-blue-50 border outline-none focus-within:border-[#ffbf00] rounded"
             />
           </div>
 
@@ -119,7 +122,7 @@ const EditSubCategory = ({ close, data, fetchData }) => {
                 )}
               </div>
               <label htmlFor="uploadSubCategoryImage">
-                <div className="px-4 py-1 border border-[#ffc929] text-[#ffbf00] rounded hover:bg-[#ffc929] hover:text-neutral-900 cursor-pointer">
+                <div className="px-4 py-1 border border-[#ffc929] text-[#ffbf00] rounded hover:bg-[#ffbf00] hover:text-neutral-900 cursor-pointer">
                   Upload Image
                 </div>
                 <input
@@ -130,13 +133,6 @@ const EditSubCategory = ({ close, data, fetchData }) => {
                 />
               </label>
             </div>
-          </div>
-
-          <div className="grid gap-1">
-            <label> Select Category </label>
-            <select className="bg-blue-50 border p-3 ">
-              <option value={""}>Select Category</option>
-            </select>
           </div>
 
           <div className="grid gap-1">
@@ -154,9 +150,7 @@ const EditSubCategory = ({ close, data, fetchData }) => {
                       {cat.name}
                       <div
                         className="cursor-pointer hover:text-red-600"
-                        onClick={() => {
-                          handleRemoveCategorySelected(cat._id)
-                        }}
+                        onClick={() => handleRemoveCategorySelected(cat._id)}
                       >
                         <IoClose size={20} />
                       </div>
@@ -182,10 +176,7 @@ const EditSubCategory = ({ close, data, fetchData }) => {
                   })
                 }}
               >
-                <option value={""} disabled>
-                  {" "}
-                  Select Category{" "}
-                </option>
+                <option value={""}>Select Category</option>
 
                 {allCategory.map((category, index) => {
                   return (
@@ -202,7 +193,7 @@ const EditSubCategory = ({ close, data, fetchData }) => {
           </div>
 
           <button
-            className={` px-4 py-1 border
+            className={` px-4 py-2 border
             ${
               subCategoryData?.name &&
               subCategoryData?.image &&

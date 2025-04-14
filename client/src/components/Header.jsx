@@ -43,22 +43,8 @@ const Header = () => {
     navigate("/user")
   }
 
-  //total item and total price
-  // useEffect(()=>{
-  //     const qty = cartItem.reduce((preve,curr)=>{
-  //         return preve + curr.quantity
-  //     },0)
-  //     setTotalQty(qty)
-
-  //     const tPrice = cartItem.reduce((preve,curr)=>{
-  //         return preve + (curr.productId.price * curr.quantity)
-  //     },0)
-  //     setTotalPrice(tPrice)
-
-  // },[cartItem])
-
   return (
-    <header className="h-24  lg:h-20 lg:shadow-md sticky top-0 z-40 flex flex-col justify-center items-center bg-white">
+    <header className="h-24  lg:h-20 lg:shadow-md sticky top-0 z-40 flex flex-col justify-center gap-1 bg-white">
       {!(isSearchPage && isMobile) && (
         <div className="container mx-auto flex items-center justify-between  px-2 ">
           {/**logo */}
@@ -113,8 +99,8 @@ const Header = () => {
                       <GoTriangleDown size={25} />
                     )}
                   </div>
-                  //openUserMenu true honne se box show hoga
                   {openUserMenu && (
+                    //openUserMenu true honne se box show hoga
                     <div className="absolute right-0 top-12">
                       <div className="bg-white rounded p-4 min-w-52 lg:shadow-lg">
                         <UserMenu close={handleCloseUserMenu} />
@@ -141,7 +127,7 @@ const Header = () => {
                 </div>
 
                 {/** */}
-                <div className="font-semibold">
+                <div className="font-semibold text-sm">
                   {cartItem[0] ? (
                     <div>
                       <p>{totalQty} Items</p>

@@ -16,10 +16,13 @@ import CategoryPage from "../pages/CategoryPage"
 import SubCategoryPage from "../pages/SubCategoryPage"
 import UploadProduct from "../pages/UploadProduct"
 import ProductAdmin from "../pages/ProductAdmin"
-import AdminPermision from "../layouts/AdminPermission"
+import AdminPermission from "../layouts/AdminPermission"
 import ProductListPage from "../pages/ProductListPage"
 import ProductDisplayPage from "../pages/ProductDisplayPage"
 import CartMobile from "../pages/CartMobile"
+import CheckoutPage from "../pages/CheckoutPage"
+import Success from "../pages/Success"
+import Cancel from "../pages/Cancel"
 
 const router = createBrowserRouter([
   {
@@ -77,34 +80,34 @@ const router = createBrowserRouter([
           {
             path: "category",
             element: (
-              <AdminPermision>
+              <AdminPermission>
                 <CategoryPage />
-              </AdminPermision>
+              </AdminPermission>
             ),
           },
 
           {
             path: "subcategory",
             element: (
-              <AdminPermision>
+              <AdminPermission>
                 <SubCategoryPage />
-              </AdminPermision>
+              </AdminPermission>
             ),
           },
           {
             path: "upload-product",
             element: (
-              <AdminPermision>
+              <AdminPermission>
                 <UploadProduct />
-              </AdminPermision>
+              </AdminPermission>
             ),
           },
           {
             path: "product",
             element: (
-              <AdminPermision>
+              <AdminPermission>
                 <ProductAdmin />
-              </AdminPermision>
+              </AdminPermission>
             ),
           },
         ],
@@ -128,6 +131,18 @@ const router = createBrowserRouter([
       {
         path: "cart",
         element: <CartMobile />,
+      },
+      {
+        path: "checkout",
+        element: <CheckoutPage />,
+      },
+      {
+        path: "success",
+        element: <Success />,
+      },
+      {
+        path: "cancel",
+        element: <Cancel />,
       },
     ],
   },

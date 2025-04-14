@@ -6,6 +6,7 @@ import Axios from "../utils/Axios"
 import DisplayTable from "../components/DisplayTable"
 import { createColumnHelper } from "@tanstack/react-table"
 import ViewImage from "../components/ViewImage"
+import { LuPencil } from "react-icons/lu"
 import { MdDelete } from "react-icons/md"
 import { HiPencil } from "react-icons/hi"
 import EditSubCategory from "../components/EditSubCategory"
@@ -57,6 +58,7 @@ const SubCategoryPage = () => {
     columnHelper.accessor("image", {
       header: "Image",
       cell: ({ row }) => {
+        console.log("row")
         return (
           <div className="flex justify-center items-center ">
             <img
@@ -167,33 +169,20 @@ const SubCategoryPage = () => {
         />
       )}
 
-      {imageURL && (
-        <ViewImage
-          url={imageURL}
-          close={() => {
-            setImageURL("")
-          }}
-        />
-      )}
+      {imageURL && <ViewImage url={imageURL} close={() => setImageURL("")} />}
 
       {openEdit && (
         <EditSubCategory
           data={editData}
-          close={() => {
-            setOpenEdit(false)
-          }}
+          close={() => setOpenEdit(false)}
           fetchData={fetchSubCategory}
         />
       )}
 
       {openDeleteConfirmBox && (
         <ConfirmBox
-          cancel={() => {
-            setOpenDeleteConfirmBox(false)
-          }}
-          close={() => {
-            setOpenDeleteConfirmBox(false)
-          }}
+          cancel={() => setOpenDeleteConfirmBox(false)}
+          close={() => setOpenDeleteConfirmBox(false)}
           confirm={handleDeleteSubCategory}
         />
       )}

@@ -6,7 +6,7 @@ import {
   logoutController,
   refreshToken,
   registerUserController,
-  resetPassword,
+  resetpassword,
   updateUserDetails,
   uploadAvatar,
   userDetails,
@@ -23,12 +23,12 @@ const userRouter = Router()
 userRouter.post("/register", registerUserController)
 userRouter.post("/verify-email", verifyEmailController)
 userRouter.post("/login", loginController)
-userRouter.post("logout", auth, logoutController)
+userRouter.get("logout", auth, logoutController)
 userRouter.put("/upload-avatar", auth, upload.single("avatar"), uploadAvatar)
 userRouter.put("/update-user", auth, updateUserDetails) //update
 userRouter.put("/forgot-password", forgotPasswordController)
 userRouter.put("/verify-forgot-password-otp", verifyForgotPasswordOtp)
-userRouter.put("/reset-password", resetPassword)
+userRouter.put("/reset-password", resetpassword)
 userRouter.post("/refresh-token", refreshToken)
 userRouter.get("/user-details", auth, userDetails) // data lekr ane ka
 

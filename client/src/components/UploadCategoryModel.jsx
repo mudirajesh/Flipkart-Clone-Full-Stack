@@ -11,11 +11,11 @@ const UploadCategoryModel = ({ close, fetchData }) => {
     name: "",
     image: "",
   })
-
   const [loading, setLoading] = useState(false)
 
   const handleOnChange = (e) => {
     const { name, value } = e.target
+
     setData((preve) => {
       return {
         ...preve,
@@ -26,13 +26,13 @@ const UploadCategoryModel = ({ close, fetchData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
     try {
       setLoading(true)
       const response = await Axios({
         ...SummaryApi.addCategory,
         data: data,
       })
-
       const { data: responseData } = response
 
       if (responseData.success) {
@@ -63,34 +63,29 @@ const UploadCategoryModel = ({ close, fetchData }) => {
         image: ImageResponse.data.url,
       }
     })
-
-    console.log(Image)
   }
   return (
-    <section className="fixed top-0 buttom-0 left-0 right-0 p-4 bg-neutral-800 bg-opacity-60 flex items-center justify-center">
+    <section className="fixed top-0 bottom-0 left-0 right-0 p-4 bg-neutral-800 bg-opacity-60 flex items-center justify-center">
       <div className="bg-white max-w-4xl w-full p-4 rounded">
         <div className="flex items-center justify-between">
-          <h1 className="font-semibold"> Category </h1>
+          <h1 className="font-semibold">Category</h1>
           <button onClick={close} className="w-fit block ml-auto">
             <IoClose size={25} />
           </button>
         </div>
-
-        <form className="my-3 grid gap-2 " onSumbit={handleSubmit}>
-          <div grid gap-1>
-            <label id="categoryName"> Name </label>
+        <form className="my-3 grid gap-2" onSubmit={handleSubmit}>
+          <div className="grid gap-1">
+            <label id="categoryName">Name</label>
             <input
               type="text"
               id="categoryName"
-              placeholder=" Enter category name"
+              placeholder="Enter category name"
               value={data.name}
               name="name"
               onChange={handleOnChange}
-              className="bg-blue-50 p-2 border border-blue-100 
-              focus-within:border-[#ffbf00] outline-none rounded"
+              className="bg-blue-50 p-2 border border-blue-100 focus-within:border-primary-200 outline-none rounded"
             />
           </div>
-
           <div className="grid gap-1">
             <p>Image</p>
             <div className="flex gap-4 flex-col lg:flex-row items-center">
@@ -105,15 +100,16 @@ const UploadCategoryModel = ({ close, fetchData }) => {
                   <p className="text-sm text-neutral-500">No Image</p>
                 )}
               </div>
-
-              <label htmlfor="uploadCategoryImage">
+              <label htmlFor="uploadCategoryImage">
                 <div
                   className={`
-                ${
-                  !data.name ? "bg-gray-300" : "bg-[#ffbf00] hover:bg-[#ffc929]"
-                }
-                 px-4 py-2 rounded cursor-pointer border font-medium
-                `}
+                            ${
+                              !data.name
+                                ? "bg-gray-300"
+                                : "border-primary-200 hover:bg-primary-100"
+                            }  
+                                px-4 py-2 rounded cursor-pointer border font-medium
+                            `}
                 >
                   Upload Image
                 </div>
@@ -131,17 +127,16 @@ const UploadCategoryModel = ({ close, fetchData }) => {
 
           <button
             className={`
-            ${
-              data.name && data.image
-                ? "bg-[#ffbf00] hover:bg-[#ffc929]"
-                : "bg-gray-300"
-            }
-            py-2
-            font-semibold 
-            `}
+                    ${
+                      data.name && data.image
+                        ? "bg-primary-200 hover:bg-primary-100"
+                        : "bg-gray-300 "
+                    }
+                    py-2    
+                    font-semibold 
+                    `}
           >
-            {" "}
-            Add Category{" "}
+            Add Category
           </button>
         </form>
       </div>

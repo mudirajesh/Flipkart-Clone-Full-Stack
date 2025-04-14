@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom"
+import { Outlet, useLocation } from "react-router-dom"
 import "./App.css"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
@@ -17,10 +17,14 @@ import { handleAddItemCart } from "./store/cartProduct"
 import { useEffect } from "react"
 import GlobalProvider from "./provider/GlobalProvider"
 import { FaCartShopping } from "react-icons/fa6"
+import CartMobileLink from "./components/CartMobile"
 
 function App() {
   //koi bhi reducer ko call krna ke liye
   const dispatch = useDispatch()
+
+  //in check out page view cart is not showing (location.pathname)
+  const location = useLocation()
 
   const fetchUser = async () => {
     const userData = await fetchUserDetails()
@@ -60,7 +64,11 @@ function App() {
 
       if (responseData.success) {
         console.log("responseData.data", responseData.data)
-        dispatch(setAllSubCategory(responseData.data))
+        dispatch(
+          setAllSubCategory(
+            responseData.data.sort((a, b) => a.name.localeCompare(b.name))
+          )
+        )
         // setCategoryData(responseData.data)
       }
     } catch (error) {
@@ -82,6 +90,7 @@ function App() {
       </main>
       <Footer />
       <Toaster />
+      {location.pathname !== "/checkout" && <CartMobileLink />}
     </GlobalProvider>
   )
 }

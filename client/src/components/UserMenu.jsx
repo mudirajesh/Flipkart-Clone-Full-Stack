@@ -98,14 +98,15 @@ const UserMenu = ({ close }) => {
           </Link>
         )}
 
-        <Link
-          onClick={handleClose}
-          to={"/dashboard/product"}
-          className="px-2 hover:bg-orange-200 py-1"
-        >
-          {" "}
-          Product{" "}
-        </Link>
+        {isAdmin(user.role) && (
+          <Link
+            onClick={handleClose}
+            to={"/dashboard/product"}
+            className="px-2 hover:bg-orange-200 py-1"
+          >
+            Product
+          </Link>
+        )}
 
         <Link
           onClick={handleClose}
@@ -115,6 +116,7 @@ const UserMenu = ({ close }) => {
           {" "}
           My Orders{" "}
         </Link>
+
         <Link
           onClick={handleClose}
           to={"/dashboard/address"}
@@ -123,9 +125,10 @@ const UserMenu = ({ close }) => {
           {" "}
           Save Address{" "}
         </Link>
+
         <button
           onClick={handleLogout}
-          className="text-left bg-red-100 px-2 hover:bg-orange-200 py-1"
+          className="text-left px-2 hover:bg-orange-200 py-1"
         >
           {" "}
           Log Out{" "}

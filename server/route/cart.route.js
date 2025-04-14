@@ -1,6 +1,7 @@
 import { Router } from "express"
 import {
   addToCartItemController,
+  deleteCartItemQtyController,
   getCartItemController,
   updateCartItemQtyController,
 } from "../controllers/cart.controller.js"

@@ -1,11 +1,10 @@
-import UploadSubCategoryModel from "../../client/src/components/UploadSubCategoryModel.jsx"
 import SubCategoryModel from "../models/subCategory.model.js"
 
 export const AddSubCategoryController = async (request, response) => {
   try {
     const { name, image, category } = request.body
 
-    if (!name && !image && category) {
+    if (!name && !image && !category[0]) {
       return response.status(400).json({
         message: "Provide name , image, category",
         error: true,
@@ -19,7 +18,7 @@ export const AddSubCategoryController = async (request, response) => {
       category,
     }
 
-    const createSubCategory = new UploadSubCategoryModel(payload)
+    const createSubCategory = new SubCategoryModel(payload)
     const save = await createSubCategory.save()
 
     return response.json({
@@ -31,8 +30,8 @@ export const AddSubCategoryController = async (request, response) => {
   } catch (error) {
     return response.status(500).json({
       message: "Internal Server Error",
-      error: false,
-      success: true,
+      error: true,
+      success: false,
     })
   }
 }

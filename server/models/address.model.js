@@ -4,6 +4,7 @@ const addressSchema = new mongoose.Schema(
   {
     address_line: {
       type: String,
+      default: "",
     },
     city: {
       type: String,
@@ -26,6 +27,10 @@ const addressSchema = new mongoose.Schema(
     status: {
       type: Boolean,
       default: true,
+    },
+    userId: {
+      type: mongoose.Schema.ObjectId,
+      default: "",
     },
   },
   {

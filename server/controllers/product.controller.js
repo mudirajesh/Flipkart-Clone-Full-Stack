@@ -66,7 +66,7 @@ export const getProductController = async (request, response) => {
     let { page, limit, search } = request.body
 
     if (!page) {
-      page = 2
+      page = 1
     }
 
     if (!limit) {

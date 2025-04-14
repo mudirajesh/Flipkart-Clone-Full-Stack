@@ -5,6 +5,7 @@ import AxiosToastError from "../utils/AxiosToastError"
 import Loading from "../components/Loading"
 import ProductCardAdmin from "../components/ProductCardAdmin"
 import { IoSearchOutline } from "react-icons/io5"
+import EditProductAdmin from "../components/EditProductAdmin"
 
 const ProductAdmin = () => {
   const [productData, setProductData] = useState([])
@@ -28,6 +29,7 @@ const ProductAdmin = () => {
       const { data: responseData } = response
 
       if (responseData.success) {
+        setTotalPageCount(responseData.totalNoPage)
         setProductData(responseData.data)
       }
     } catch (error) {
@@ -48,7 +50,9 @@ const ProductAdmin = () => {
   }
 
   const handlePrevious = () => {
-    if (page > 1) setPage((preve) => preve - 1)
+    if (page > 1) {
+      setPage((preve) => preve - 1)
+    }
   }
 
   const handleOnChange = (e) => {
@@ -77,7 +81,7 @@ const ProductAdmin = () => {
       <div className="p-2 bg-white shadow-md flex items-center justify-between gap-4">
         <h2 className="font-semibold"> Product</h2>
 
-        <div className="h-full min-w-24 max-w-40 w-full ml-auto bg-blue-50 px-4 flex items-center gap-3 py-2 rounded border focus-within:border-[#ffbf00] ">
+        <div className="h-full min-w-24 max-w-56 w-full ml-auto bg-blue-50 px-4 flex items-center gap-3 py-2 rounded border focus-within:border-[#ffbf00] ">
           <IoSearchOutline size={25} />
           <input
             type="text"
@@ -95,7 +99,14 @@ const ProductAdmin = () => {
         <div className="min-h-[55vh]">
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 ">
             {productData.map((p, index) => {
-              return <ProductCardAdmin data={p} />
+              return (
+                <>
+                  <ProductCardAdmin
+                    data={p}
+                    fetchProductData={fetchProductData}
+                  />
+                </>
+              )
             })}
           </div>
         </div>
@@ -103,7 +114,7 @@ const ProductAdmin = () => {
         <div className="flex justify-between my-4">
           <button
             onClick={handlePrevious}
-            className="border border-[#ffbf00] px-4 py-1 hover:bg-[#ffc929]"
+            className="border border-[#ffbf00] px-4 py-1 hover:bg-[#ffbf00]"
           >
             Previous
           </button>
@@ -112,7 +123,7 @@ const ProductAdmin = () => {
           </button>
           <button
             onClick={handleNext}
-            className="border border-[#ffbf00] px-4 py-1 hover:bg-[#ffc929]"
+            className="border border-[#ffbf00] px-4 py-1 hover:bg-[#ffbf00]"
           >
             Next
           </button>

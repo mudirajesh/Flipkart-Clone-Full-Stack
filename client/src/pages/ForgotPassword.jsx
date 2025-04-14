@@ -40,7 +40,6 @@ const ForgotPassword = () => {
 
       if (response.data.error) {
         toast.error(response.data.message)
-        return
       }
 
       if (response.data.success) {
@@ -59,7 +58,7 @@ const ForgotPassword = () => {
   }
 
   return (
-    <section className=" w-full container mx-auto p-2">
+    <section className=" w-full container mx-auto px-2">
       <div className="bg-white my-4 w-full max-w-lg mx-auto rounded p-7">
         <p className="font-semibold text-lg"> Forgot Password </p>
 
@@ -69,7 +68,7 @@ const ForgotPassword = () => {
             <input
               type="email"
               id="email"
-              className="bg-blue-50 p-2 border rounded outline:none focus:border-[#ffbf00]"
+              className="bg-blue-50 p-2 border rounded outline-none focus:border-[#ffbf00]"
               name="email"
               value={data.email}
               onChange={handleChange}

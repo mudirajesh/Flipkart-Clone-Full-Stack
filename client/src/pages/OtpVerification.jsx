@@ -39,7 +39,6 @@ const OtpVerification = () => {
 
       if (response.data.error) {
         toast.error(response.data.message)
-        return
       }
 
       //whole data send to reset-password page when checking with
@@ -70,7 +69,7 @@ const OtpVerification = () => {
         <form className="grid gap-4 py-4" onSubmit={handleSubmit}>
           <div className="grid gap-1 ">
             <label htmlFor="email">Enter your OTP :</label>
-            <div className="flex items-center gap-2 justify-between mt-4">
+            <div className="flex items-center gap-2 justify-between mt-3">
               {data.map((element, index) => {
                 return (
                   <input
@@ -82,7 +81,6 @@ const OtpVerification = () => {
                       return ref
                     }}
                     value={data[index]}
-                    maxLength={1}
                     onChange={(e) => {
                       const value = e.target.value
                       const newData = [...data]
@@ -93,7 +91,8 @@ const OtpVerification = () => {
                         inputRef.current[index + 1].focus()
                       }
                     }}
-                    className="bg-blue-50 w-full max-w-16 p-2 border rounded outline:none focus:border-[#ffbf00]
+                    maxLength={1}
+                    className="bg-blue-50 w-full max-w-16 p-2 border rounded outline-none focus:border-[#ffbf00]
                     text-center font-semibold"
                   />
                 )

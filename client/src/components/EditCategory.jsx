@@ -81,8 +81,8 @@ const EditCategory = ({ close, fetchData, data: CategoryData }) => {
           </button>
         </div>
 
-        <form className="my-3 grid gap-2 " onSumbit={handleSubmit}>
-          <div grid gap-1>
+        <form className="my-3 grid gap-2 " onSubmit={handleSubmit}>
+          <div className="grid gap-1">
             <label id="categoryName"> Name </label>
             <input
               type="text"
@@ -111,7 +111,7 @@ const EditCategory = ({ close, fetchData, data: CategoryData }) => {
                 )}
               </div>
 
-              <label htmlfor="uploadCategoryImage">
+              <label htmlFor="uploadCategoryImage">
                 <div
                   className={`
                     ${

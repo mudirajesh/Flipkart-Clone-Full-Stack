@@ -1,6 +1,9 @@
-import bcrypt from "bcryptjs"
 import UserModel from "../models/user.model.js"
 import bcryptjs from "bcryptjs"
+import verifyEmailTemplate from "../utils/verifyEmailTemplate.js"
+import generatedAccessToken from "../utils/generatedAccessToken.js"
+import generatedRefreshToken from "../utils/generatedRefreshToken.js"
+import uploadImageCloudinary from "../utils/uploadImageCloudinary.js"
 import generatedOtp from "../utils/generatedOtp.js"
 import sendEmail from "../config/sendEmail.js"
 import forgotPasswordTemplate from "../utils/forgotPasswordTemplate.js"
@@ -11,7 +14,7 @@ export async function registerUserController(request, response) {
     const { name, email, password } = request.body
 
     if (!name || !email || !password) {
-      return request.status(400).json({
+      return response.status(400).json({
         message: "Provide email,name and password",
         error: true,
         success: false,
@@ -23,7 +26,7 @@ export async function registerUserController(request, response) {
     })
 
     if (user) {
-      return request.status(400).json({
+      return response.json({
         message: "Already register email id",
         error: true,
         success: false,
@@ -95,8 +98,8 @@ export async function verifyEmailController(request, response) {
 
     return response.json({
       message: "Email verification Done",
-      error: false,
       success: true,
+      error: false,
     })
   } catch (error) {
     return response.status(500).json({
@@ -148,7 +151,7 @@ export async function loginController(request, response) {
       })
     }
 
-    const accessToken = await generatedAccessToken(user._id)
+    const accesstoken = await generatedAccessToken(user._id)
     const refreshToken = await generatedRefreshToken(user._id)
 
     const updateUser = await UserModel.findByIdAndUpdate(user?._id, {
@@ -161,7 +164,7 @@ export async function loginController(request, response) {
       sameSite: "None",
     }
 
-    response.cookie("accessToken", accessToken, cookiesOption)
+    response.cookie("accessToken", accesstoken, cookiesOption)
     response.cookie("refreshToken", refreshToken, cookiesOption)
 
     return response.json({
@@ -169,7 +172,7 @@ export async function loginController(request, response) {
       error: false,
       success: true,
       data: {
-        accessToken,
+        accesstoken,
         refreshToken,
       },
     })
@@ -186,16 +189,16 @@ export async function loginController(request, response) {
 export async function logoutController(request, response) {
   try {
     const userid = request.userId //middleware
-    const cookieOption = {
+    const cookiesOption = {
       httpOnly: true,
       secure: true,
       sameSite: "None",
     }
 
-    response.clearCookie("accessToken", cookieOption)
-    response.clearCookie("refreshToken", cookieOption)
+    response.clearCookie("accessToken", cookiesOption)
+    response.clearCookie("refreshToken", cookiesOption)
 
-    const removeRefreshToken = await UserModel.findByIdAndUpdate(userId, {
+    const removeRefreshToken = await UserModel.findByIdAndUpdate(userid, {
       refresh_token: "",
     })
 
@@ -304,7 +307,7 @@ export async function forgotPasswordController(request, response) {
 
     const update = await UserModel.findByIdAndUpdate(user._id, {
       forgot_password: otp,
-      forgot_pasword_expiry: new Date(expiryTime).toISOString(),
+      forgot_pasword_expiry: new Date(expireTime).toISOString(),
     })
 
     await sendEmail({
@@ -396,7 +399,7 @@ export async function verifyForgotPasswordOtp(request, response) {
 }
 
 //reset the password
-export async function resetPassword(request, response) {
+export async function resetpassword(request, response) {
   try {
     const { email, newPassword, confirmPassword } = request.body
 
@@ -519,8 +522,6 @@ export async function userDetails(request, response) {
       error: false,
       success: true,
     })
-
-    return response
   } catch (error) {
     return response.status(500).json({
       message: "Something is wrong",

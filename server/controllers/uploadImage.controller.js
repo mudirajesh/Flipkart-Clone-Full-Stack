@@ -1,4 +1,4 @@
-import uploadImageCloudinary from "../utils/uploadImageCloudary.js"
+import uploadImageCloudinary from "../utils/uploadImageCloudinary.js"
 
 const uploadImageController = async (request, response) => {
   try {
@@ -14,7 +14,7 @@ const uploadImageController = async (request, response) => {
       error: false,
     })
   } catch (error) {
-    return response.status.json(500).json({
+    return response.status(500).json({
       message: error.message || error,
       error: true,
       success: false,

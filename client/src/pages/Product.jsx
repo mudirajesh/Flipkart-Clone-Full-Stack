@@ -28,6 +28,7 @@ const Product = () => {
     }
   }
 
+  console.log("product page")
   useEffect(() => {
     fetchProductData()
   }, [])

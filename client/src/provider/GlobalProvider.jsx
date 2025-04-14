@@ -6,6 +6,8 @@ import { handleAddItemCart } from "../store/cartProduct"
 import AxiosToastError from "../utils/AxiosToastError"
 import toast from "react-hot-toast"
 import { pricewithDiscount } from "../utils/PriceWithDiscount"
+import { handleAddAddress } from "../store/addressSlice"
+import { setOrder } from "../store/orderSlice"
 
 export const GlobalContext = createContext(null)
 
@@ -17,6 +19,7 @@ const GlobalProvider = ({ children }) => {
   const [notDiscountTotalPrice, setNotDiscountTotalPrice] = useState(0)
   const [totalQty, setTotalQty] = useState(0)
   const cartItem = useSelector((state) => state.cartItem.cart)
+  const user = useSelector((state) => state?.user)
 
   const fetchCartItem = async () => {
     try {
@@ -99,15 +102,59 @@ const GlobalProvider = ({ children }) => {
     setNotDiscountTotalPrice(notDiscountPrice)
   }, [cartItem])
 
+  const handleLogoutOut = () => {
+    localStorage.clear()
+    dispatch(handleAddItemCart([]))
+  }
+
+  const fetchAddress = async () => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.getAddress,
+      })
+      const { data: responseData } = response
+
+      if (responseData.success) {
+        dispatch(handleAddAddress(responseData.data))
+      }
+    } catch (error) {
+      AxiosToastError(error)
+    }
+  }
+
+  const fetchOrder = async () => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.getOrderItems,
+      })
+      const { data: responseData } = response
+
+      if (responseData.success) {
+        dispatch(setOrder(responseData.data))
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchCartItem()
+    handleLogoutOut()
+    fetchAddress()
+    fetchOrder()
+  }, [user])
+
   return (
     <GlobalContext.Provider
       value={{
         fetchCartItem,
         updateCartItem,
         deleteCartItem,
+        fetchAddress,
         totalPrice,
         totalQty,
         notDiscountTotalPrice,
+        fetchOrder,
       }}
     >
       {children}
