@@ -3,10 +3,10 @@ import { Link } from "react-router-dom"
 import AxiosToastError from "../utils/AxiosToastError"
 import Axios from "../utils/Axios"
 import SummaryApi from "../common/SummaryApi"
-import { FaAngleLeft, FaAngleRight } from "react-icons/fa6"
-import { useSelector } from "react-redux"
 import CardLoading from "./CardLoading"
 import CardProduct from "./CardProduct"
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6"
+import { useSelector } from "react-redux"
 import { valideURLConvert } from "../utils/valideURLConvert"
 
 const CategoryWiseProductDisplay = ({ id, name }) => {
@@ -66,7 +66,6 @@ const CategoryWiseProductDisplay = ({ id, name }) => {
   }
 
   const redirectURL = handleRedirectProductListpage()
-
   return (
     <div>
       <div className="container mx-auto p-4 flex items-center justify-between gap-4">
@@ -75,7 +74,6 @@ const CategoryWiseProductDisplay = ({ id, name }) => {
           See All
         </Link>
       </div>
-
       <div className="relative flex items-center ">
         <div
           className=" flex gap-4 md:gap-6 lg:gap-8 container mx-auto px-4 overflow-x-scroll scrollbar-none scroll-smooth"
@@ -97,7 +95,6 @@ const CategoryWiseProductDisplay = ({ id, name }) => {
             )
           })}
         </div>
-
         <div className="w-full left-0 right-0 container mx-auto  px-2  absolute hidden lg:flex justify-between">
           <button
             onClick={handleScrollLeft}

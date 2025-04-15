@@ -1,19 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialValue = {
-  addressList: [],
+    addressList : []
 }
 
 const addressSlice = createSlice({
-  name: "address",
-  initialState: initialValue,
-  reducers: {
-    handleAddAddress: (state, action) => {
-      state.addressList = [...action.payload]
-    },
-  },
+    name : 'address',
+    initialState : initialValue,
+    reducers : {
+        handleAddAddress : (state,action)=>{
+            state.addressList = [...action.payload]
+        }
+    }
 })
 
-export const { handleAddAddress } = addressSlice.actions
+export const {handleAddAddress  } = addressSlice.actions
 
 export default addressSlice.reducer

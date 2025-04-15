@@ -12,6 +12,11 @@ const Home = () => {
   const subCategoryData = useSelector((state) => state.product.allSubCategory)
   const navigate = useNavigate()
 
+  // Sort the categoryData in Z-A order
+  const sortedCategoryData = [...categoryData].sort((a, b) =>
+    b.name.localeCompare(a.name)
+  )
+
   const handleRedirectProductListpage = (id, cat) => {
     console.log(id, cat)
     const subcategory = subCategoryData.find((sub) => {
@@ -63,7 +68,7 @@ const Home = () => {
                 </div>
               )
             })
-          : categoryData.map((cat, index) => {
+          : sortedCategoryData.map((cat, index) => {
               return (
                 <div
                   key={cat._id + "displayCategory"}
@@ -84,7 +89,7 @@ const Home = () => {
       </div>
 
       {/***display category product */}
-      {categoryData?.map((c, index) => {
+      {sortedCategoryData?.map((c, index) => {
         return (
           <CategoryWiseProductDisplay
             key={c?._id + "CategorywiseProduct"}

@@ -54,7 +54,7 @@ const ProductDisplayPage = () => {
   const handleScrollLeft = () => {
     imageContainer.current.scrollLeft -= 100
   }
-
+  console.log("product data", data)
   return (
     <section className="container mx-auto p-4 grid lg:grid-cols-2 ">
       <div className="">
@@ -126,12 +126,10 @@ const ProductDisplayPage = () => {
           {data?.more_details &&
             Object.keys(data?.more_details).map((element, index) => {
               return (
-                <>
-                  <div>
-                    <p className="font-semibold">{element}</p>
-                    <p className="text-base">{data?.more_details[element]}</p>
-                  </div>
-                </>
+                <div>
+                  <p className="font-semibold">{element}</p>
+                  <p className="text-base">{data?.more_details[element]}</p>
+                </div>
               )
             })}
         </div>
@@ -173,7 +171,7 @@ const ProductDisplayPage = () => {
           </div>
         )}
 
-        <h2 className="font-semibold">Why shop from flipkart? </h2>
+        <h2 className="font-semibold">Why shop from Flipkart? </h2>
         <div>
           <div className="flex  items-center gap-4 my-4">
             <img src={image1} alt="superfast delivery" className="w-20 h-20" />
@@ -191,7 +189,7 @@ const ProductDisplayPage = () => {
               <div className="font-semibold">Best Prices & Offers</div>
               <p>
                 Best price destination with offers directly from the
-                manufacturers.
+                nanufacturers.
               </p>
             </div>
           </div>
@@ -220,12 +218,10 @@ const ProductDisplayPage = () => {
           {data?.more_details &&
             Object.keys(data?.more_details).map((element, index) => {
               return (
-                <>
-                  <div>
-                    <p className="font-semibold">{element}</p>
-                    <p className="text-base">{data?.more_details[element]}</p>
-                  </div>
-                </>
+                <div>
+                  <p className="font-semibold">{element}</p>
+                  <p className="text-base">{data?.more_details[element]}</p>
+                </div>
               )
             })}
         </div>

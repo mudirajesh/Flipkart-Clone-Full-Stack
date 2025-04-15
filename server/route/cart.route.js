@@ -1,18 +1,12 @@
-import { Router } from "express"
-import {
-  addToCartItemController,
-  deleteCartItemQtyController,
-  getCartItemController,
-  updateCartItemQtyController,
-} from "../controllers/cart.controller.js"
-import auth from "../middleware/auth.js"
+import { Router } from "express";
+import auth from "../middleware/auth.js";
+import { addToCartItemController, deleteCartItemQtyController, getCartItemController, updateCartItemQtyController } from "../controllers/cart.controller.js";
 
 const cartRouter = Router()
 
-// called as endpoint ->     /
-cartRouter.post("/create", auth, addToCartItemController)
-cartRouter.get("/get", auth, getCartItemController)
-cartRouter.put("/update-qty", auth, updateCartItemQtyController)
-cartRouter.delete("/delete-cart-item", auth, deleteCartItemQtyController)
+cartRouter.post('/create',auth,addToCartItemController)
+cartRouter.get("/get",auth,getCartItemController)
+cartRouter.put('/update-qty',auth,updateCartItemQtyController)
+cartRouter.delete('/delete-cart-item',auth,deleteCartItemQtyController)
 
 export default cartRouter
