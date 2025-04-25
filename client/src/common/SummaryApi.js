@@ -1,5 +1,8 @@
 export const baseURL = import.meta.env.VITE_API_URL
 
+// Add these entries to your existing SummaryApi object
+// If the file doesn't exist, create it with these entries
+
 const SummaryApi = {
   register: {
     url: "/api/user/register",
@@ -153,6 +156,16 @@ const SummaryApi = {
     url: "/api/order/order-list",
     method: "get",
   },
-}
+  
+  // Razorpay endpoints
+  createRazorpayOrder: {
+    url: "/api/razorpay/create-order",
+    method: "POST"
+  },
+  verifyRazorpayPayment: {
+    url: "/api/razorpay/verify-payment",
+    method: "POST"
+  }
+};
 
 export default SummaryApi

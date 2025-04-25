@@ -113,6 +113,111 @@ const CheckoutPage = () => {
       AxiosToastError(error)
     }
   }
+
+  const handleRazorpayPayment = async () => {
+    try {
+      // Validate if address is selected
+      if (!addressList[selectAddress]) {
+        toast.error("Please select a delivery address")
+        return
+      }
+
+      toast.loading("Initializing payment...")
+      
+      // Get selected address details
+      const selectedAddress = addressList[selectAddress]
+
+      // Create Razorpay order
+      const response = await Axios({
+        ...SummaryApi.createRazorpayOrder,
+        data: {
+          list_items: cartItemsList,
+          addressId: selectedAddress._id,
+          subTotalAmt: totalPrice,
+          totalAmt: totalPrice,
+          customer: {
+            name: selectedAddress.name || "Customer",
+            address: {
+              line1: selectedAddress.address_line,
+              city: selectedAddress.city,
+              state: selectedAddress.state,
+              postal_code: selectedAddress.pincode,
+              country: selectedAddress.country,
+            },
+            phone: selectedAddress.mobile,
+          },
+        },
+      })
+
+      const { data: responseData } = response
+
+      if (responseData.success) {
+        toast.dismiss()
+        
+        const options = {
+          key: responseData.key_id,
+          amount: responseData.order.amount,
+          currency: responseData.order.currency,
+          name: "Flipkart Clone",
+          description: "Payment for your order",
+          order_id: responseData.order.id,
+          handler: async function (response) {
+            try {
+              // Verify payment
+              const verifyResponse = await Axios({
+                ...SummaryApi.verifyRazorpayPayment,
+                data: {
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_signature: response.razorpay_signature,
+                  list_items: cartItemsList,
+                  addressId: selectedAddress._id,
+                },
+              })
+
+              if (verifyResponse.data.success) {
+                toast.success("Payment successful!")
+                if (fetchCartItem) {
+                  fetchCartItem()
+                }
+                if (fetchOrder) {
+                  fetchOrder()
+                }
+                navigate("/success", {
+                  state: {
+                    text: "Order",
+                  },
+                })
+              }
+            } catch (error) {
+              AxiosToastError(error)
+            }
+          },
+          prefill: {
+            name: selectedAddress.name || "Customer",
+            email: "",
+            contact: selectedAddress.mobile,
+          },
+          notes: {
+            address: selectedAddress.address_line,
+          },
+          theme: {
+            color: "#3399cc",
+          },
+        }
+
+        const rzp = new window.Razorpay(options)
+        rzp.open()
+      } else {
+        toast.dismiss()
+        toast.error("Failed to initialize payment")
+      }
+    } catch (error) {
+      toast.dismiss()
+      AxiosToastError(error)
+    }
+  }
+
   return (
     <section className="bg-blue-50">
       <div className="container mx-auto p-4 flex flex-col lg:flex-row w-full gap-5 justify-between">
@@ -125,6 +230,7 @@ const CheckoutPage = () => {
                 <label
                   htmlFor={"address" + index}
                   className={!address.status && "hidden"}
+                  key={address._id || index}
                 >
                   <div className="border rounded p-3 flex gap-3 hover:bg-blue-50">
                     <div>
@@ -187,10 +293,17 @@ const CheckoutPage = () => {
           </div>
           <div className="w-full flex flex-col gap-4">
             <button
+              className="py-2 px-4 bg-blue-600 hover:bg-blue-700 rounded text-white font-semibold"
+              onClick={handleRazorpayPayment}
+            >
+              Pay with Razorpay
+            </button>
+            
+            <button
               className="py-2 px-4 bg-green-600 hover:bg-green-700 rounded text-white font-semibold"
               onClick={handleOnlinePayment}
             >
-              Online Payment
+              Pay with Stripe
             </button>
 
             <button
